@@ -1,5 +1,38 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %} Welcome to Apupos
 
-{% block content %}
-Welcome to Apupos
+<div id="apupos">Carregando...</div>
+
+{% comment %} carregamento automático de apupos/tweets {% endcomment %}
+<script>
+  const apuposElement = document.getElementById("apupos");
+
+  const xhr = new XMLHttpRequest();
+  const method = "GET";
+  const url = "/apupos";
+  const responseType = "json";
+
+  function formatApupo(apupo) {
+    formatedApupo =
+      "<h1>" + apupo.id + "</h1>" + "<p>" + apupo.content + "</p>";
+    return formatedApupo;
+  }
+
+  xhr.responseType = responseType;
+  xhr.open(method, url);
+  xhr.onload = function () {
+    const serverResponse = xhr.response;
+    const listedItems = serverResponse.response;
+    var finalStr = "";
+    var i;
+    for (i = 0; i < listedItems.length; i++) {
+      console.log(i);
+      console.log(listedItems[i]);
+      var currentApupo = formatApupo(listedItems[i]);
+      finalStr += currentApupo;
+    }
+
+    apuposElement.innerHTML = finalStr;
+  };
+  xhr.send();
+</script>
 {% endblock content %}
