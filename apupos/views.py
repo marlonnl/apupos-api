@@ -9,6 +9,17 @@ def home_view(request, *args, **kwargs):
     return render(request, "pages/home.html", context={}, status=200)
 
 
+def apupo_list_view(request, *args, **kwargs):
+    """
+    REST API VIEW
+    """
+    queryset = Apupo.objects.all()
+    apupos_list = [{"id": i.id, "content": i.content} for i in queryset]
+    data = {"response": apupos_list}
+
+    return JsonResponse(data)
+
+
 def apupo_detail_view(request, apupo_id, *args, **kwargs):
     """
     REST API VIEW
