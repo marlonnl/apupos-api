@@ -5,7 +5,8 @@ from .models import Apupo
 
 
 def home_view(request, *args, **kwargs):
-    return HttpResponse("<p>Hello</p>")
+    # return HttpResponse("<p>Hello</p>")
+    return render(request, "pages/home.html", context={}, status=200)
 
 
 def apupo_detail_view(request, apupo_id, *args, **kwargs):
