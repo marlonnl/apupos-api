@@ -11,9 +11,31 @@
   const url = "/apupos";
   const responseType = "json";
 
+  function handleLike(apupo_id, currentLikes) {
+    console.log(apupo_id, currentLikes);
+  }
+
+  function likeBtn(apupo) {
+    return (
+      "<button class='btn btn-primary' onclick='handleLike(" +
+      apupo.id +
+      "," +
+      apupo.likes +
+      ")'>" +
+      apupo.likes +
+      " Like</button>"
+    );
+  }
+
   function formatApupo(apupo) {
     formatedApupo =
-      "<h1>" + apupo.id + "</h1>" + "<p>" + apupo.content + "</p>";
+      "<div class='mb-4 apupo' id='apupo-" +
+      apupo.id +
+      "'><p>" +
+      apupo.content +
+      "</p><div>" +
+      likeBtn(apupo) +
+      "</div></div>";
     return formatedApupo;
   }
 
