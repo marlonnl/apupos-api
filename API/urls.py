@@ -18,11 +18,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from apupos.views import home_view, apupo_detail_view, apupo_list_view
+from apupos.views import (
+    home_view,
+    apupo_detail_view,
+    apupo_list_view,
+    apupo_create_view,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home_view),
+    path("create-apupo", apupo_create_view),
     path("apupos/", apupo_list_view),
     path("apupo/<int:apupo_id>", apupo_detail_view),
 ]
