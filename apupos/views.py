@@ -15,11 +15,18 @@ def home_view(request, *args, **kwargs):
 
 
 def apupo_create_view(request, *args, **kwargs):
+    is_ajax = request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+    # print("ajax ", is_ajax)
     form = ApupoForm(request.POST or None)
     next_url = request.POST.get("next") or None
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
+
+        if is_ajax:
+            return JsonResponse({}, status=201) # 201 = created items
+
+
         if next_url is not None and url_has_allowed_host_and_scheme(next_url, allowed_hosts=ALLOWED_HOSTS):
             return redirect(next_url)
         form = ApupoForm()

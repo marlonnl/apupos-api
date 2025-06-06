@@ -2,7 +2,12 @@
 
 <div class="row">
   <div class="col-md-4 mx-auto col-10">
-    <form class="form" method="POST" action="/create-apupo">
+    <form
+      class="form"
+      method="POST"
+      action="/create-apupo"
+      id="apupo-create-form"
+    >
       {% csrf_token %}
       <input type="hidden" value="/" name="next" />
       <textarea
@@ -19,12 +24,60 @@
 
 {% comment %} carregamento automático de apupos/tweets {% endcomment %}
 <script>
-  const apuposElement = document.getElementById("apupos");
+  function handleApupoCreateFormSubmit(e) {
+    e.preventDefault();
+    const myForm = e.target;
+    const myFormData = new FormData(myForm);
+    const url = myForm.getAttribute("action"); // create-apupo/
+    const method = myForm.getAttribute("method"); // POST
 
-  const xhr = new XMLHttpRequest();
-  const method = "GET";
-  const url = "/apupos";
-  const responseType = "json";
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.onload = function () {
+      const serverResponse = xhr.response;
+      console.log(serverResponse);
+      const apuposEl = document.getElementById("apupos");
+      loadApupos(apuposEl);
+    };
+    xhr.send(myFormData);
+  }
+
+  const apupoCreateFormElement = document.getElementById("apupo-create-form");
+  const apuposEl = document.getElementById("apupos");
+
+  apupoCreateFormElement.addEventListener(
+    "submit",
+    handleApupoCreateFormSubmit
+  );
+
+  const loadApupos = function (apuposElement) {
+    const xhr = new XMLHttpRequest();
+    const method = "GET";
+    const url = "/apupos";
+    const responseType = "json";
+
+    xhr.responseType = responseType;
+    xhr.open(method, url);
+    xhr.onload = function () {
+      const serverResponse = xhr.response;
+      const listedItems = serverResponse.response;
+      var finalStr = "";
+      var i;
+      for (i = 0; i < listedItems.length; i++) {
+        {% comment %} console.log(i);
+        console.log(listedItems[i]); {% endcomment %}
+        var currentApupo = formatApupo(listedItems[i]);
+        finalStr += currentApupo;
+      }
+
+      apuposElement.innerHTML = finalStr;
+    };
+    xhr.send();
+  };
+
+  loadApupos(apuposEl);
 
   function handleLike(apupo_id, currentLikes) {
     console.log(apupo_id, currentLikes);
@@ -53,23 +106,5 @@
       "</div></div>";
     return formatedApupo;
   }
-
-  xhr.responseType = responseType;
-  xhr.open(method, url);
-  xhr.onload = function () {
-    const serverResponse = xhr.response;
-    const listedItems = serverResponse.response;
-    var finalStr = "";
-    var i;
-    for (i = 0; i < listedItems.length; i++) {
-      console.log(i);
-      console.log(listedItems[i]);
-      var currentApupo = formatApupo(listedItems[i]);
-      finalStr += currentApupo;
-    }
-
-    apuposElement.innerHTML = finalStr;
-  };
-  xhr.send();
 </script>
 {% endblock content %}
