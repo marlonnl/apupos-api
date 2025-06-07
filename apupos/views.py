@@ -19,17 +19,20 @@ def apupo_create_view(request, *args, **kwargs):
     # print("ajax ", is_ajax)
     form = ApupoForm(request.POST or None)
     next_url = request.POST.get("next") or None
+
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
 
         if is_ajax:
-            return JsonResponse({}, status=201) # 201 = created items
-
+            return JsonResponse(obj.serialize(), status=201) # 201 = created items
 
         if next_url is not None and url_has_allowed_host_and_scheme(next_url, allowed_hosts=ALLOWED_HOSTS):
             return redirect(next_url)
         form = ApupoForm()
+
+    if form.errors and is_ajax:
+        return JsonResponse(form.errors, status=400)
 
     return render(request, "components/form.html", context={"form": form})
 
