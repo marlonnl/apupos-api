@@ -13,7 +13,8 @@
       <textarea
         class="form-control"
         name="content"
-        placeholder="apupe"
+        required="required"
+        placeholder="o que está acontecendo?"
       ></textarea>
       <button type="submit" class="btn btn-primary">apupo</button>
     </form>
@@ -32,20 +33,36 @@
     const method = myForm.getAttribute("method"); // POST
 
     const xhr = new XMLHttpRequest();
+    const responseType = "json";
+    xhr.responseType = responseType;
+
     xhr.open(method, url);
     xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
     xhr.onload = function () {
-      const serverResponse = xhr.response;
-      console.log(serverResponse);
-      const apuposEl = document.getElementById("apupos");
-      loadApupos(apuposEl);
+      if (xhr.status === 201) {
+        const newApupo = xhr.response
+        const newApupoElement = formatApupo(newApupo)
+        const newApupoHtmlElement = apuposContainerElement.innerHTML
+        // nova postagem primeiro
+        apuposContainerElement.innerHTML = newApupoElement + newApupoHtmlElement
+        myForm.reset()
+      } else if (xhr.status === 400) {
+        const errorJson = xhr.response
+        console.log(errorJson)
+      } else if (xhr.status === 500) {
+        alert("Ocorreu um erro do servidor, por favor tente novamente mais tarde")
+      }
     };
+    xhr.onerror = function() {
+      alert("ERRO!! Tente novamente mais tarde.")
+    }
     xhr.send(myFormData);
   }
 
   const apupoCreateFormElement = document.getElementById("apupo-create-form");
-  const apuposEl = document.getElementById("apupos");
+  const apuposContainerElement = document.getElementById("apupos");
 
   apupoCreateFormElement.addEventListener(
     "submit",
@@ -77,7 +94,7 @@
     xhr.send();
   };
 
-  loadApupos(apuposEl);
+  loadApupos(apuposContainerElement);
 
   function handleLike(apupo_id, currentLikes) {
     console.log(apupo_id, currentLikes);
