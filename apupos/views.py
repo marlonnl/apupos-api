@@ -16,12 +16,22 @@ def home_view(request, *args, **kwargs):
 
 def apupo_create_view(request, *args, **kwargs):
     is_ajax = request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+    user = request.user
+
+    # user authentication handling 
+    if not request.user.is_authenticated:
+        user = None
+        if is_ajax:
+            return JsonResponse({}, status=401)
+        return redirect(settings.LOGIN_URL)
+
     # print("ajax ", is_ajax)
     form = ApupoForm(request.POST or None)
     next_url = request.POST.get("next") or None
 
     if form.is_valid():
         obj = form.save(commit=False)
+        obj.user = user
         obj.save()
 
         if is_ajax:
