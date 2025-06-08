@@ -9,6 +9,7 @@
       id="apupo-create-form"
     >
       {% csrf_token %}
+      <div class="d-none alert alert-danger" id="apupo-creat-form-error"></div>
       <input type="hidden" value="/" name="next" />
       <textarea
         class="form-control"
@@ -25,6 +26,16 @@
 
 {% comment %} carregamento automático de apupos/tweets {% endcomment %}
 <script>
+  function handleApupoFormError(message, display) {
+    var errorElement = document.getElementById("apupo-creat-form-error")
+    if (display === true) {
+      errorElement.setAttribute("class", "d-block alert alert-danger")
+      errorElement.innerText = message
+    } else {
+      errorElement.setAttribute("class", "d-none")
+    }
+  }
+
   function handleApupoCreateFormSubmit(e) {
     e.preventDefault();
     const myForm = e.target;
@@ -42,6 +53,7 @@
 
     xhr.onload = function () {
       if (xhr.status === 201) {
+        handleApupoFormError("", false)
         const newApupo = xhr.response
         const newApupoElement = formatApupo(newApupo)
         const newApupoHtmlElement = apuposContainerElement.innerHTML
@@ -50,7 +62,19 @@
         myForm.reset()
       } else if (xhr.status === 400) {
         const errorJson = xhr.response
-        console.log(errorJson)
+        const contentError = errorJson.content
+        let contentErrorMsg
+        if (contentError) {
+          contentErrorMsg = contentError[0]
+          if (contentErrorMsg) {
+            handleApupoFormError(contentErrorMsg, true)
+          } else {
+            alert("Um erro ocorreu, tente mais tarde novamente.")
+          }
+        } else {
+          alert("Um erro ocorreu, tente mais tarde novamente.")
+        }
+
       } else if (xhr.status === 500) {
         alert("Ocorreu um erro do servidor, por favor tente novamente mais tarde")
       }
