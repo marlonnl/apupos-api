@@ -23,6 +23,7 @@ from apupos.views import (
     apupo_detail_view,
     apupo_list_view,
     apupo_create_view,
+    apupo_delete_view,
 )
 
 urlpatterns = [
@@ -31,4 +32,5 @@ urlpatterns = [
     path("create-apupo", apupo_create_view),
     path("apupos/", apupo_list_view),
     path("apupo/<int:apupo_id>", apupo_detail_view),
+    path("apupo/<int:apupo_id>/delete", apupo_delete_view),
 ]
