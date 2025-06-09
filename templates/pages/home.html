@@ -78,6 +78,9 @@
       } else if (xhr.status === 401) {
         alert("Você precisa estar logado")
         window.location.href = "/login"
+      } else if (xhr.status === 403) {
+        alert("Você precisa estar logado")
+        window.location.href = "/login"
       } else if (xhr.status === 500) {
         alert("Ocorreu um erro do servidor, por favor tente novamente mais tarde")
       }
