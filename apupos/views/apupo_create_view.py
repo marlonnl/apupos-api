@@ -7,7 +7,7 @@ from ..serializers.apupo_serializer import ApupoSerializer
 
 
 @api_view(["POST"])  # only POST method
-@authentication_classes([SessionAuthentication])
+# @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])  # se estiver autenticado, terá acesso a função
 def apupo_create_view(request, *args, **kwargs):
     serializer = ApupoSerializer(data=request.POST)
