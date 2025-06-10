@@ -5,9 +5,14 @@ from ..models.apupo import Apupo
 
 
 class ApupoSerializer(serializers.ModelSerializer):
+    likes = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Apupo
-        fields = ["content"]
+        fields = ["id", "content", "likes"]
+
+    def get_likes(self, obj):
+        return obj.likes.count()
 
     def validate_content(self, value):
         if len(value) > settings.MAX_POST_LENGTH:
