@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ["127.0.0.1"]
 LOGIN_URL = "/login"
 
 MAX_POST_LENGTH = 140
+ACTION_OPTIONS = ["like", "unlike", "rt"]
 
 # Application definition
 
