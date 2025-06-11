@@ -26,6 +26,23 @@
 
 {% comment %} carregamento automático de apupos/tweets {% endcomment %}
 <script>
+
+  function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+
   function handleApupoFormError(message, display) {
     var errorElement = document.getElementById("apupo-creat-form-error")
     if (display === true) {
@@ -126,20 +143,41 @@
 
   loadApupos(apuposContainerElement);
 
-  function handleLike(apupo_id, currentLikes) {
+  function handleApupoAction(apupo_id, currentLikes, action) {
     console.log(apupo_id, currentLikes);
+    const url = "api/apupo/action"
+    const method = "POST"
+    const data = JSON.stringify({
+      id: apupo_id,
+      action: action
+    })
+
+    const xhr = new XMLHttpRequest()
+    const csrftoken = getCookie('csrftoken');
+    xhr.open(method, url)
+    xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest");
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+    xhr.onload = function() {
+      // console.log(xhr.status, xhr.response)
+      loadApupos(apuposContainerElement);
+    }
+    xhr.send(data)
+    return
   }
 
   function likeBtn(apupo) {
-    return (
-      "<button class='btn btn-primary' onclick='handleLike(" +
-      apupo.id +
-      "," +
-      apupo.likes +
-      ")'>" +
-      apupo.likes +
-      " Like</button>"
-    );
+    return "<button class='btn btn-primary btn-sm' onclick=handleApupoAction(" +
+    apupo.id + "," + apupo.likes + ",'like')>" + apupo.likes + " Likes</button>"
+  }
+  function unLikeBtn(apupo) {
+    return "<button class='btn btn-outline-primary btn-sm' onclick=handleApupoAction(" +
+    apupo.id + "," + apupo.likes + ",'unlike')> Unlike</button>"
+  }
+  function rtBtn(apupo) {
+    return "<button class='btn btn-outline-success btn-sm' onclick=handleApupoAction(" +
+    apupo.id + "," + apupo.likes + ",'rt')> rt</button>"
   }
 
   function formatApupo(apupo) {
@@ -150,6 +188,8 @@
       apupo.content +
       "</p><div>" +
       likeBtn(apupo) +
+      unLikeBtn(apupo) +
+      rtBtn(apupo) +
       "</div></div>";
     return formatedApupo;
   }
