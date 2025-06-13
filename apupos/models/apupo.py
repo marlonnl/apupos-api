@@ -17,11 +17,15 @@ class Apupo(models.Model):
     image = models.FileField(upload_to="images/", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # for rt
+    parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
+
     class Meta:
         ordering = ["-id"]  # ordem descendente
 
     def __str__(self):
         return self.content
 
-    def serialize(self):
-        return {"id": self.id, "content": self.content, "likes": 10}
+    @property
+    def is_retweet(self):
+        return self.parent is not None
