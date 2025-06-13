@@ -16,7 +16,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path, include
 
 from apupos.views import (
     home_view,
@@ -33,6 +33,7 @@ urlpatterns = [
     path("create-apupo", apupo_create_view),
     path("apupos/", apupo_list_view),
     path("apupo/<int:apupo_id>", apupo_detail_view),
-    path("api/apupo/<int:apupo_id>/delete", apupo_delete_view),
-    path("api/apupo/action", apupo_action_view),
+    path("api/apupo/", include("apupos.urls")),
+    # path("api/apupo/<int:apupo_id>/delete", apupo_delete_view),
+    # path("api/apupo/action", apupo_action_view),
 ]
