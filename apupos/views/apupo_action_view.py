@@ -13,8 +13,9 @@ def apupo_action_view(request, *args, **kwargs):
     serializer = ApupoActionSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         data = serializer.validated_data
-        apupo_id = data["id"]
-        action = data["action"]
+        apupo_id = data.get("id")
+        action = data.get("action")
+        content = data.get("content")
 
     queryset = Apupo.objects.filter(id=apupo_id)
 
@@ -27,10 +28,12 @@ def apupo_action_view(request, *args, **kwargs):
     if action == "like":
         obj.likes.add(request.user)
         serializer = ApupoSerializer(obj)
-        return Response(serializer.data, status=201)
+        return Response(serializer.data, status=200)
     elif action == "unlike":
         obj.likes.remove(request.user)
     elif action == "rt":
-        pass  # TODO: rt
+        new_apupo = Apupo.objects.create(user=request.user, parent=obj, content=content)
+        serializer = ApupoSerializer(new_apupo)
+        return Response(serializer.data, status=200)
 
     return Response({}, status=201)
