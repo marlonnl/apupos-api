@@ -29,8 +29,12 @@ def apupo_action_view(request, *args, **kwargs):
         obj.likes.add(request.user)
         serializer = ApupoSerializer(obj)
         return Response(serializer.data, status=200)
+
     elif action == "unlike":
         obj.likes.remove(request.user)
+        serializer = ApupoSerializer(obj)
+        return Response(serializer.data, status=200)
+
     elif action == "rt":
         new_apupo = Apupo.objects.create(user=request.user, parent=obj, content=content)
         serializer = ApupoSerializer(new_apupo)
