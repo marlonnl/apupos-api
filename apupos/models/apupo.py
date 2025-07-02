@@ -23,8 +23,8 @@ class Apupo(models.Model):
     class Meta:
         ordering = ["-id"]  # ordem descendente
 
-    def __str__(self):
-        return self.content
+    # def __str__(self):
+    #     return self.content
 
     @property
     def is_retweet(self):
