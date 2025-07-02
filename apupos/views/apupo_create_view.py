@@ -14,7 +14,7 @@ from ..serializers.apupo_create_serializer import ApupoCreateSerializer
 # @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])  # se estiver autenticado, terá acesso a função
 def apupo_create_view(request, *args, **kwargs):
-    serializer = ApupoCreateSerializer(data=request.POST)
+    serializer = ApupoCreateSerializer(data=request.data)
 
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)  # content=request.content
