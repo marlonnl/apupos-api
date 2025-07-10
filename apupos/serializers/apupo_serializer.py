@@ -12,7 +12,7 @@ class ApupoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Apupo
-        fields = ["id", "content", "likes", "is_retweet", "parent"]
+        fields = ["id", "content", "likes", "is_retweet", "parent", "created_at"]
 
     def get_likes(self, obj):
         return obj.likes.count()
@@ -24,3 +24,6 @@ class ApupoSerializer(serializers.ModelSerializer):
             content = obj.parent.content
 
         return content
+
+    def get_created_at(self, obj):
+        return 2222
