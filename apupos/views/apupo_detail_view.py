@@ -11,7 +11,7 @@ def apupo_detail_view(request, apupo_id, *args, **kwargs):
     queryset = Apupo.objects.filter(id=apupo_id)
 
     if not queryset.exists():
-        return Response({}, status=404)
+        return Response({"message": "post ID does not exist."}, status=404)
 
     obj = queryset.first()
     serializer = ApupoSerializer(obj)
