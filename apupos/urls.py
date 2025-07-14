@@ -14,6 +14,7 @@ urlpatterns = [
     path("<int:apupo_id>/", apupo_detail_view),
     path("<int:apupo_id>/delete/", apupo_delete_view),
     path("action/", apupo_action_view),
+    # path("profile/<str:username>/", apupo_profile_view),
 ]
 
 # BASE ENDPOIT
