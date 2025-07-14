@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 LOGIN_URL = "/login"
 
-MAX_POST_LENGTH = 140
+MAX_POST_LENGTH = 280
 ACTION_OPTIONS = ["like", "unlike", "rt"]
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "apupos",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -139,7 +140,7 @@ if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         "rest_framework.renderers.BrowsableAPIRenderer",
     ]
-    DEFAULT_AUTHENTICATION_CLASSES += ["apupos.rest_api.dev.DevAuthentication"]
+    # DEFAULT_AUTHENTICATION_CLASSES += ["apupos.rest_api.dev.DevAuthentication"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": DEFAULT_AUTHENTICATION_CLASSES,
