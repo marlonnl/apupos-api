@@ -12,8 +12,14 @@ def apupo_list_view(request, *args, **kwargs):
     """
 
     queryset = Apupo.objects.all()
+
+    username = request.GET.get("username")  # url.. ?username={username}
+    if username is not None:
+        queryset = queryset.filter(user__username__iexact=username)
+
     serializer = ApupoSerializer(
         queryset, many=True
     )  # many=True means the queryset has multiple items
 
+    # print(serializer.data)
     return Response(serializer.data)
