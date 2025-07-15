@@ -1,1 +1,3 @@
-from .login_view import login_view
+from .user_registration_view import UserRegistrationAPIView
+from .user_login_view import UserLoginAPIView
+from .user_logout_view import UserLogoutAPIView
