@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework_simplejwt",
     "corsheaders",
     "apupos",
     "accounts",
@@ -139,8 +140,9 @@ DEFAULT_AUTHENTICATION_CLASSES = ["rest_framework.authentication.SessionAuthenti
 if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         "rest_framework.renderers.BrowsableAPIRenderer",
+        # "rest_framework_simplejwt.authentication.JWTAuthentications",
     ]
-    # DEFAULT_AUTHENTICATION_CLASSES += ["apupos.rest_api.dev.DevAuthentication"]
+    DEFAULT_AUTHENTICATION_CLASSES += ["apupos.rest_api.dev.DevAuthentication"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": DEFAULT_AUTHENTICATION_CLASSES,
@@ -151,3 +153,7 @@ REST_FRAMEWORK = {
 # CORS settings
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r"^/api/.*$"
+
+
+# AUTH USER MODEL
+# AUTH_USER_MODEL = "accounts.CustomUser"
