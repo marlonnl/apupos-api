@@ -18,7 +18,7 @@ class Apupo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     # for rt
-    parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ["-id"]  # ordem descendente
