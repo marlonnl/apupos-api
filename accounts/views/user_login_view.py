@@ -29,7 +29,7 @@ class UserLoginAPIView(GenericAPIView):
 
         res.data = data
         res.set_cookie(
-            key="access_token",
+            key="accessToken",
             value=token.access_token,
             httponly=True,
             secure=True,
@@ -37,7 +37,7 @@ class UserLoginAPIView(GenericAPIView):
             path="/",
         )
         res.set_cookie(
-            key="refresh_token",
+            key="refreshToken",
             value=token,
             httponly=True,
             secure=True,
