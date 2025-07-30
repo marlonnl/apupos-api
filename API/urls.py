@@ -18,6 +18,7 @@ urlpatterns = [
     path("apupos/", apupo_list_view),
     path("api/apupo/", include("apupos.urls")),
     path("api/auth/", include("accounts.urls")),
+    path("api/profile/", include("profiles.urls")),
     # path("create-apupo", apupo_create_view),
     # path("apupo/<int:apupo_id>", apupo_detail_view),
     # path("api/apupo/<int:apupo_id>/delete", apupo_delete_view),
