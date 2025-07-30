@@ -34,7 +34,6 @@ class UserLogoutAPIView(APIView):
             res.delete_cookie("accessToken", path="/", samesite="None")
             res.delete_cookie("refreshToken", path="/", samesite="None")
 
-            # logout(request)
             return res
 
         except Exception as e:
