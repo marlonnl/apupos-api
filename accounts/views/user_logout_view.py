@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
 
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -26,11 +25,16 @@ class UserLogoutAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
         try:
+            refresh_token = request.COOKIES.get("refreshToken")
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
             res = Response()
             res.data = {"success": True}
-            res.delete_cookie("access_token", path="/", samesite="None")
-            res.delete_cookie("refresh_token", path="/", samesite="None")
+            res.delete_cookie("accessToken", path="/", samesite="None")
+            res.delete_cookie("refreshToken", path="/", samesite="None")
 
+            # logout(request)
             return res
 
         except Exception as e:
