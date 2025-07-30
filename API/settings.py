@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     # project apps
     "apupos",
     "accounts",
-    "profile",
+    "profiles",
 ]
 
 MIDDLEWARE = [
