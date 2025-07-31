@@ -1,3 +1,14 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models.profile import Profile
+
+
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ["__str__", "name", "site"]
+    list_filter = ["user", "name"]
+
+    class Meta:
+        model = Profile
+
+
+admin.site.register(Profile, ProfileAdmin)
