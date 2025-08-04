@@ -5,6 +5,7 @@ from apupos.views import (
     home_view,
     apupo_list_view,
 )
+from profiles.views import profile_update_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -13,4 +14,5 @@ urlpatterns = [
     path("api/apupo/", include("apupos.urls")),
     path("api/auth/", include("accounts.urls")),
     path("api/profile/", include("profiles.urls")),
+    path("api/profile-update/", profile_update_view),
 ]
