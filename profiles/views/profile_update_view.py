@@ -12,6 +12,7 @@ from ..models.profile import Profile
 def profile_update_view(request, *args, **kwargs):
     # print(request.data)
 
+    user = request.user
     qs = Profile.objects.filter(user__username=request.user).first()
 
     if not qs:
@@ -24,6 +25,9 @@ def profile_update_view(request, *args, **kwargs):
     qs.site = request.data["site"]
     qs.location = request.data["location"]
 
+    user.first_name = request.data["name"]
+
     qs.save()
+    user.save()
 
     return Response({"profile": "updated"}, status=201)
