@@ -9,3 +9,11 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ["id", "user", "username", "name", "bio", "site", "location"]
+
+
+class ProfileSerializerLogin(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username", read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ["id", "username", "name", "bio", "site", "location"]
