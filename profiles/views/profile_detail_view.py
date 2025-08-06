@@ -19,4 +19,4 @@ def profile_detail_view(request, username, *args, **kwargs):
 
     serializer = ProfileSerializer(queryset, many=True)
 
-    return Response(serializer.data[0])
+    return Response(serializer.data)
