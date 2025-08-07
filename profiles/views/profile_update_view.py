@@ -27,6 +27,7 @@ def profile_update_view(request, *args, **kwargs):
 
     user.first_name = request.data["name"]
 
+    # TODO: validação
     qs.save()
     user.save()
 

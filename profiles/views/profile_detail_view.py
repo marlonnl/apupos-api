@@ -19,4 +19,8 @@ def profile_detail_view(request, username, *args, **kwargs):
 
     serializer = ProfileSerializer(queryset, many=True)
 
+    # TODO: following (does_follow_user, is_following)
+
+    # print(serializer.data)
+    # [{'id': 1, 'user': 2, 'username': 'test', 'name': None, 'bio': None, 'site': None, 'location': None}]
     return Response(serializer.data)
