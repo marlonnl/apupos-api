@@ -9,4 +9,4 @@ class CustomUser(AbstractUser):
     # REQUIRED_FIELDS = ["username"]
 
     def __str__(self) -> str:
-        return f"{self.username}"
+        return self.username
