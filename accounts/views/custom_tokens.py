@@ -2,6 +2,9 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from profiles.models.profile import Profile
+from profiles.serializers.profile_serializer import ProfileSerializerLogin
+
 from ..serializers import UserSerializer
 
 
@@ -19,6 +22,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
+        user = request.data["username"]
+
         try:
             response = super().post(request, *args, **kwargs)
             tokens = response.data
@@ -26,10 +31,13 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             access_token = tokens["access"]
             refresh_token = tokens["refresh"]
 
-            serializer = UserSerializer(request.user, many=True)  # many=True
+            qs = Profile.objects.filter(user__username=user).first()
+            serializer_unfiltered = ProfileSerializerLogin(qs)
+            serializer = {"user": serializer_unfiltered.data}
 
             res = Response()
             res.data = response.data
+            res.data = serializer
             res.set_cookie(
                 key="accessToken",
                 value=str(access_token),
@@ -52,7 +60,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
         except Exception as e:
             print("Error: ", e)
-            return Response({"success": False})
+            return Response({"success": False}, status=401)
 
 
 class CustomTokenRefreshView(TokenRefreshView):
