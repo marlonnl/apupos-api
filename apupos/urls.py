@@ -6,6 +6,7 @@ from .views import (
     apupo_delete_view,
     apupo_detail_view,
     apupo_list_view,
+    apupo_feed_view,
 )
 
 urlpatterns = [
@@ -14,6 +15,7 @@ urlpatterns = [
     path("<int:apupo_id>/", apupo_detail_view),
     path("<int:apupo_id>/delete/", apupo_delete_view),
     path("action/", apupo_action_view),
+    path("feed/", apupo_feed_view),
     # path("profile/<str:username>/", apupo_profile_view),
 ]
 
