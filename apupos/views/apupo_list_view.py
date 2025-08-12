@@ -7,7 +7,7 @@ from ..models.apupo import Apupo
 from ..serializers.apupo_serializer import ApupoSerializer
 
 
-PAGE_SIZE = 10
+PAGE_SIZE = 20
 
 
 def get_paginated_qs_response(qs, request):
@@ -44,6 +44,7 @@ def apupo_list_view(request, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def apupo_feed_view(request, *args, **kwargs):
     """
+    REST API / GET method
     Returns all posts from the authenticated user.
     """
 
