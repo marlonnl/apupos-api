@@ -3,7 +3,10 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from profiles.models.profile import Profile
-from profiles.serializers.profile_serializer import ProfileSerializerLogin
+from profiles.serializers.profile_serializer import (
+    ProfileSerializer,
+    ProfileSerializerLogin,
+)
 
 from ..serializers import UserSerializer
 
@@ -32,7 +35,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             refresh_token = tokens["refresh"]
 
             qs = Profile.objects.filter(user__username=user).first()
-            serializer_unfiltered = ProfileSerializerLogin(qs)
+            serializer_unfiltered = ProfileSerializer(qs)
             serializer = {"user": serializer_unfiltered.data}
 
             res = Response()
