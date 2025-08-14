@@ -23,6 +23,18 @@ class ProfileSerializer(serializers.ModelSerializer):
             "followers_count",
         ]
 
+    def get_is_following(self, obj):
+        is_following = False
+
+        context = self.context
+        request = context.get("request")
+
+        if request:
+            user = request.user
+            is_following = user in obj.followers.all()
+
+        return is_following
+
     def get_first_name(self, obj):
         return obj.user.first_name
 
