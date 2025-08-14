@@ -21,7 +21,7 @@ urlpatterns = [
         name="token-refresh",
     ),
     path("user/", user_info_view.UserInfoAPIView.as_view(), name="user-info"),
-    path("login/", user_login_view.UserLoginAPIView.as_view(), name="login-user"),
+    # path("login/", user_login_view.UserLoginAPIView.as_view(), name="login-user"),
     path("logout/", user_logout_view.UserLogoutAPIView.as_view(), name="logout-user"),
     path("authenticated/", user_is_auth.is_authenticated, name="is-authenticated"),
     path(
