@@ -15,7 +15,9 @@ def get_paginated_qs_response(qs, request):
     paginator.page_size = PAGE_SIZE
 
     paginated_queryset = paginator.paginate_queryset(qs, request)
-    serializer = ApupoSerializer(paginated_queryset, many=True)
+    serializer = ApupoSerializer(
+        paginated_queryset, many=True, context={"request": request}
+    )
 
     return paginator.get_paginated_response(serializer.data)
 
