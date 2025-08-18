@@ -10,6 +10,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     following_count = serializers.SerializerMethodField(read_only=True)
     followers_count = serializers.SerializerMethodField(read_only=True)
 
+    posts = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Profile
         fields = [
@@ -21,7 +23,12 @@ class ProfileSerializer(serializers.ModelSerializer):
             "location",
             "following_count",
             "followers_count",
+            "posts",
         ]
+
+    def get_posts(self, obj):
+        # print(obj.user.apupos.count())
+        return obj.user.apupos.count()
 
     def get_is_following(self, obj):
         is_following = False
