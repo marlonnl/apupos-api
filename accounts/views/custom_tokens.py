@@ -62,8 +62,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             return res
 
         except Exception as e:
-            print("Error: ", e)
-            return Response({"success": False}, status=401)
+            # print("Error: ", e)
+            return Response({"Error": str(e)}, status=401)
 
 
 class CustomTokenRefreshView(TokenRefreshView):
