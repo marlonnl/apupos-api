@@ -1,11 +1,8 @@
-from datetime import datetime, timezone
-import time
-
 from django.conf import settings
-from rest_framework import serializers
-from rest_framework.fields import CurrentUserDefault
+from django.utils.timezone import localtime, now
 
-from apupos.models.apupo_like import ApupoLike
+from rest_framework import serializers
+
 from profiles.serializers.profile_serializer import ProfileSerializer
 from ..models.apupo import Apupo
 from ..serializers import ApupoCreateSerializer
@@ -18,8 +15,6 @@ class ApupoSerializer(serializers.ModelSerializer):
     parent = ApupoCreateSerializer(read_only=True)
     created_at = serializers.SerializerMethodField(read_only=True)
 
-    # user = UserSerializer()
-    # user = serializers.SerializerMethodField(read_only=True)
     user = ProfileSerializer(source="user.profile", read_only=True)
     is_liked = serializers.SerializerMethodField(read_only=True)
 
@@ -61,9 +56,20 @@ class ApupoSerializer(serializers.ModelSerializer):
         return content
 
     def get_created_at(self, obj):
-        post_date = obj.created_at
-        now_date = datetime.now(timezone.utc)
+        delta = now() - obj.created_at
+        seconds = delta.total_seconds()
+        minutes = int(seconds // 60)
+        hours = int(seconds // 3600)
 
-        elapsed_timedelta = now_date - post_date
-
-        return post_date.strftime("%H:%M:%S %d/%m/%y")
+        if seconds < 60:
+            return "agora"
+        elif minutes == 1:
+            return "1min"
+        elif minutes < 60:
+            return f"{minutes}min"
+        elif hours == 1:
+            return "1h"
+        elif hours < 24:
+            return f"{hours}h"
+        else:
+            return localtime(obj.created_at).strftime("%d/%m/%Y %H:%M")
