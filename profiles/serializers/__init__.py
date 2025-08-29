@@ -1,1 +1,5 @@
-from .profile_serializer import ProfileSerializer, ProfileSerializerLogin
+from .profile_serializer import (
+    ProfileSerializer,
+    ProfileSerializerLogin,
+    FollowingSerializer,
+)
