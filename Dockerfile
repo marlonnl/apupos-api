@@ -1,32 +1,25 @@
-# Estágio 1: build da aplicação
-FROM python:3.10-slim as builder
-
-WORKDIR /app
-
-# Copia e instala dependências
-COPY Pipfile Pipfile.lock ./
-# RUN pip install pipenv && pipenv install --deploy --ignore-pipfile
-RUN pip install pipenv && pipenv sync
-
-# Copia o código-fonte
-COPY . .
-
-# Etapa final: menor imagem para rodar
 FROM python:3.10-slim
 
 WORKDIR /app
 
-# Copia somente dependências instaladas
-COPY --from=builder /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
-COPY --from=builder /usr/local/bin/ /usr/local/bin/
+# Instala pacotes do sistema (inclui netcat!)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    curl \
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install pipenv
+
+COPY Pipfile Pipfile.lock ./
+RUN pipenv install --system --deploy
+
 COPY . .
 
-# Variáveis para melhorar o comportamento Python
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Expõe porta padrão do Django
 EXPOSE 8000
 
-# Comando de inicialização
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "apupos_api.wsgi:application"]
+ENTRYPOINT ["/entrypoint.sh"]
