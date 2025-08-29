@@ -14,6 +14,8 @@ class Profile(models.Model):
     site = models.URLField(null=True, blank=True)
     location = models.CharField(max_length=200, null=True, blank=True)
 
+    image = models.FileField(upload_to="images/", blank=True)
+
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

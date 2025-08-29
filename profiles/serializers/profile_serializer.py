@@ -24,6 +24,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "following_count",
             "followers_count",
             "posts",
+            "image",
         ]
 
     def get_posts(self, obj):
@@ -35,6 +36,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
         context = self.context
         request = context.get("request")
+        # print(obj.followers.all())
 
         if request:
             user = request.user
@@ -55,6 +57,40 @@ class ProfileSerializer(serializers.ModelSerializer):
         return obj.followers.count()
 
 
+class FollowingSerializer(serializers.ModelSerializer):
+    following = serializers.SerializerMethodField(read_only=True)
+    followers = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ["following", "followers"]
+
+    def get_following(self, obj):
+        context = self.context
+        request = context.get("request")
+        user = request.user
+
+        # print(obj.user.following.all())
+
+        following_list = []
+        for userf in obj.user.following.all():
+            # print(userf.user.username)
+            following_list.append(userf.user.username)
+
+        # print(following_list)
+        return following_list
+
+    def get_followers(self, obj):
+        # data = serializers.Serializer(obj.followers.all().list())
+        # print("followers:", obj.followers.all())
+        followers_list = []
+        for user in obj.followers.all():
+            followers_list.append(user.username)
+
+        return followers_list
+        # return obj.followers.all()
+
+
 # class ProfileSerializer(serializers.ModelSerializer):
 #     username = serializers.CharField(source="user.username", read_only=True)
 
@@ -69,8 +105,3 @@ class ProfileSerializerLogin(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ["id", "username", "name", "bio", "site", "location"]
-
-
-class FollowingSerializer(serializers.ModelField):
-    class Meta:
-        model = Profile
