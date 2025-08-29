@@ -7,6 +7,7 @@ from .views import (
     user_info_view,
     user_is_auth,
     custom_tokens,
+    ChangePasswordView,
 )
 
 urlpatterns = [
@@ -29,4 +30,5 @@ urlpatterns = [
         user_registration_view.UserRegistrationAPIView.as_view(),
         name="register-user",
     ),
+    path("change-password/", ChangePasswordView.as_view(), name="change-password"),
 ]

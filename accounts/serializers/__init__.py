@@ -1,1 +1,2 @@
 from .user_serializer import UserSerializer, RegistrationSerializer, UserLoginSerializer
+from .change_password_serializer import ChangePasswordSerializer
