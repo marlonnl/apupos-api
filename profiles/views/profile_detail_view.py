@@ -17,6 +17,17 @@ def profile_detail_view(request, username, *args, **kwargs):
     if not queryset:
         return Response({"profile": "perfil não existe."}, status=404)
 
-    serializer = ProfileSerializer(queryset, many=True)
+    serializer = ProfileSerializer(queryset, many=True, context={"request": request})
 
     return Response(serializer.data, status=200)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def profile_me_detail(request, *args, **kwargs):
+    user = request.user
+
+    queryset = Profile.objects.filter(user__username=user)
+    serializer = ProfileSerializer(queryset, many=True, context={"request": request})
+
+    return Response(serializer.data[0], status=200)

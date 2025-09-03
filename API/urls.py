@@ -9,6 +9,7 @@ from apupos.views import (
     apupo_list_view,
 )
 from profiles.views import profile_update_view
+from profiles.views.profile_detail_view import profile_me_detail
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -18,6 +19,7 @@ urlpatterns = [
     path("api/auth/", include("accounts.urls")),
     path("api/profile/", include("profiles.urls")),
     path("api/profile-update/", profile_update_view),
+    path("api/me/", profile_me_detail),
 ]
 
 if settings.DEBUG:
