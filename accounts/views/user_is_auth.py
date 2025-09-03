@@ -15,7 +15,7 @@ def is_authenticated(request, *args, **kwargs):
     if not queryset:
         return Response({"authenticated": "usuário não existe."}, status=404)
 
-    serializer = ProfileSerializer(queryset)
+    serializer = ProfileSerializer(queryset, context={"request": request})
 
     data = {"authenticated": True, "user": serializer.data}
 
