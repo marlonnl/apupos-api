@@ -2,8 +2,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
-from profiles.serializers.profile_serializer import ProfileSerializer
-
 from ..models.profile import Profile
 
 
@@ -11,6 +9,9 @@ from ..models.profile import Profile
 @permission_classes([IsAuthenticated])
 def profile_update_view(request, *args, **kwargs):
     # print(request.data)
+    # print("image" in request.FILES)
+    # print(request.FILES)
+    # print(request.FILES.get("image"))
 
     user = request.user
     qs = Profile.objects.filter(user__username=request.user).first()
@@ -26,6 +27,11 @@ def profile_update_view(request, *args, **kwargs):
     qs.location = request.data["location"]
 
     user.first_name = request.data["name"]
+
+    qs.image = request.FILES.get("image")
+    # uploaded_avatar = request.data["image"]
+    # new_avatar: UploadedFile = Profile(pk=qs.id, image=uploaded_avatar)
+    # new_avatar.save()
 
     # TODO: validação
     qs.save()
