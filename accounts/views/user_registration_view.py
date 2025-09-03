@@ -9,14 +9,13 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from ..serializers import RegistrationSerializer
 
 
+# TODO: first_name = username
 class UserRegistrationAPIView(GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = RegistrationSerializer
 
     def post(self, request, *args, **kwargs):
-        # print(request.data)
         serializer = self.get_serializer(data=request.data)
-        # print(serializer)
         serializer.is_valid(raise_exception=True)
 
         user = serializer.save()
