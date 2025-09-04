@@ -14,7 +14,7 @@ def apupo_detail_view(request, apupo_id, *args, **kwargs):
         return Response({"message": "post ID does not exist."}, status=404)
 
     obj = queryset.first()
-    serializer = ApupoSerializer(obj)
+    serializer = ApupoSerializer(obj, context={"request": request})
 
     return Response(serializer.data, status=200)
 
