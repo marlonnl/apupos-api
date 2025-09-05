@@ -9,12 +9,7 @@ from ..models import CustomUser
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = [
-            "id",
-            "username",
-            "first_name",
-            "email",
-        ]
+        fields = ("id", "username", "first_name", "email")
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -39,6 +34,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         password = validated_data.pop("password1")
         validated_data.pop("password2")
+        validated_data["first_name"] = validated_data["username"]
 
         return CustomUser.objects.create_user(password=password, **validated_data)
 

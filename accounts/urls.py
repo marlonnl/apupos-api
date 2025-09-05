@@ -3,11 +3,12 @@ from django.urls import path
 from .views import (
     user_login_view,
     user_logout_view,
-    user_registration_view,
+    UserRegistrationAPIView,
     user_info_view,
     user_is_auth,
     custom_tokens,
     ChangePasswordView,
+    DeleteAccount,
 )
 
 urlpatterns = [
@@ -27,8 +28,9 @@ urlpatterns = [
     path("authenticated/", user_is_auth.is_authenticated, name="is-authenticated"),
     path(
         "register/",
-        user_registration_view.UserRegistrationAPIView.as_view(),
+        UserRegistrationAPIView.as_view(),
         name="register-user",
     ),
     path("change-password/", ChangePasswordView.as_view(), name="change-password"),
+    path("delete/", DeleteAccount.as_view(), name="delete-account"),
 ]
