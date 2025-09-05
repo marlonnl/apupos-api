@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.conf import settings
 
 from django.db.models.signals import post_save
 
 User = settings.AUTH_USER_MODEL
+UserModel = get_user_model()
 
 
 class Profile(models.Model):
@@ -27,7 +29,15 @@ class Profile(models.Model):
 
 def saved_profile(sender, instance, created, *args, **kwargs):
     if created:
+        # create a Profile to the new user
         Profile.objects.get_or_create(user=instance)
+
+        # follows admin
+        admin_profile = "apupos"
+        to_follow = UserModel.objects.filter(username=admin_profile).first()
+        profile = to_follow.profile
+
+        profile.followers.add(instance)
 
 
 post_save.connect(saved_profile, sender=User)
