@@ -220,3 +220,16 @@ CORS_URLS_REGEX = r"^/api/.*$"
 
 # AUTH USER MODEL
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+# Render
+import os
+import dj_database_url
+
+DEBUG = False
+ALLOWED_HOSTS = ["your-app-name.onrender.com"]  # troque pelo nome do app no Render
+
+# Banco de dados
+DATABASES = {"default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))}
+
+# Static files
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
