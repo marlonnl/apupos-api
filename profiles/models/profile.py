@@ -34,10 +34,12 @@ def saved_profile(sender, instance, created, *args, **kwargs):
 
         # follows admin
         admin_profile = "apupos"
-        to_follow = UserModel.objects.filter(username=admin_profile).first()
-        profile = to_follow.profile
+        if instance != admin_profile:
+            to_follow = UserModel.objects.filter(username=admin_profile).first()
 
-        profile.followers.add(instance)
+            if to_follow:
+                profile = to_follow.profile
+                profile.followers.add(instance)
 
 
 post_save.connect(saved_profile, sender=User)
