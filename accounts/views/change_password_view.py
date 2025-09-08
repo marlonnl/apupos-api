@@ -10,7 +10,6 @@ class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        print(request)
         serializer = ChangePasswordSerializer(
             data=request.data, context={"request": request}
         )
