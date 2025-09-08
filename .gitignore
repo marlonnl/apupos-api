@@ -2,3 +2,4 @@
 __pychache__
 /staticfiles/
 media/
+.mypy_cache
