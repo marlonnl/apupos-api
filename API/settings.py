@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-!^&_7e26s3hqm=xk2pqiob@6w9vpe9=0=vhmvn7iz11mf7^rzu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "apupos-api.onrender.com"]
 LOGIN_URL = "/login"
 
 MAX_POST_LENGTH = 280
