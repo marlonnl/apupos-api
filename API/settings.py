@@ -219,7 +219,10 @@ REST_FRAMEWORK = {
 # CORS settings
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://apupos-mlzw6b1cu-marlonns-projects.vercel.app",
+]
 CORS_URLS_REGEX = r"^/api/.*$"
 
 
