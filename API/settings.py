@@ -231,7 +231,7 @@ import os
 import dj_database_url
 
 DEBUG = False
-ALLOWED_HOSTS = ["apupos-api.onrender.com/"]  # troque pelo nome do app no Render
+ALLOWED_HOSTS = ["apupos-api.onrender.com"]  # troque pelo nome do app no Render
 
 # Banco de dados
 DATABASES = {"default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))}
