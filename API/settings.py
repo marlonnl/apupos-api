@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "apupos-api.onrender.com",
-    "https://apupos-mlzw6b1cu-marlonns-projects.vercel.app/",
+    "apupos-mlzw6b1cu-marlonns-projects.vercel.app",
 ]
 LOGIN_URL = "/login"
 
