@@ -15,6 +15,8 @@ from pathlib import Path
 
 from datetime import timedelta
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -223,21 +225,19 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://apupos-mlzw6b1cu-marlonns-projects.vercel.app",
 ]
-CORS_URLS_REGEX = r"^/api/.*$"
+# CORS_URLS_REGEX = r"^/api/.*$"
 
 
 # AUTH USER MODEL
 AUTH_USER_MODEL = "accounts.CustomUser"
 
 # Render
-import os
-import dj_database_url
 
-DEBUG = False
-ALLOWED_HOSTS = ["apupos-api.onrender.com"]  # troque pelo nome do app no Render
+# DEBUG = False
+# ALLOWED_HOSTS = ["apupos-api.onrender.com"]  # troque pelo nome do app no Render
 
 # Banco de dados
 DATABASES = {"default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))}
 
 # Static files
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
