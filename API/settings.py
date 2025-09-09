@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "apupos-api.onrender.com",
     "apupos-mlzw6b1cu-marlonns-projects.vercel.app",
+    "apupos-web.vercel.app",
 ]
 LOGIN_URL = "/login"
 
@@ -224,6 +225,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://apupos-mlzw6b1cu-marlonns-projects.vercel.app",
+    "https://apupos-web.vercel.app/",
 ]
 # CORS_URLS_REGEX = r"^/api/.*$"
 
