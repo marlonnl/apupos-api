@@ -58,8 +58,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
                 path="/",
             )
 
-            res.cookies["accessToken"]["Partitioned"] = True
-            res.cookies["refreshToken"]["Partitioned"] = True
+            # res.cookies["accessToken"]["Partitioned"] = True
+            # res.cookies["refreshToken"]["Partitioned"] = True
 
             res.data.update(tokens)
             return res
