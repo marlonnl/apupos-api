@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: apupos-api
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "python manage.py migrate && gunicorn API.wsgi:application"

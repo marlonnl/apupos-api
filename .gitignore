@@ -1,5 +1,4 @@
 *.pyc
 __pychache__
 /staticfiles/
-media/
 .mypy_cache
