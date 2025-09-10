@@ -170,6 +170,8 @@ CLOUDINARY_STORAGE = {
     "API_SECRET": "5hU1G_l0F4H51S7c3l6iTAt6OIQ",
 }
 
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
 # SIMPLE JWT CONFIG
 
 SIMPLE_JWT = {
