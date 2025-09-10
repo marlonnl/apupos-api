@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
+    "cloudinary",
+    "cloudinary_storage",
     # project apps
     "apupos",
     "accounts",
@@ -159,6 +161,14 @@ MEDIA_URL = "/media/"
 
 UPLOADED_FILES_USE_URL = True
 
+
+# CLODINARY
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": "dxyzqmot6",
+    "API_KEY": "947672779475792",
+    "API_SECRET": "5hU1G_l0F4H51S7c3l6iTAt6OIQ",
+}
 
 # SIMPLE JWT CONFIG
 
