@@ -12,6 +12,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     posts = serializers.SerializerMethodField(read_only=True)
 
+    image = serializers.ImageField(use_url=True)
+
     class Meta:
         model = Profile
         fields = [
