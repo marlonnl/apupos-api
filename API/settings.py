@@ -154,7 +154,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
@@ -162,12 +162,12 @@ MEDIA_URL = "/media/"
 UPLOADED_FILES_USE_URL = True
 
 
-# CLODINARY
+# CLOUDINARY
 
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "dxyzqmot6",
-    "API_KEY": "947672779475792",
-    "API_SECRET": "5hU1G_l0F4H51S7c3l6iTAt6OIQ",
+    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
 }
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
