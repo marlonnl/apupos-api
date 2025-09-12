@@ -1,11 +1,15 @@
 # APUPOS Django REST API
 
-Base url: `api/`
+Projeto com finalidade de aprendizado para a conclusão de curso full stack webdeveloper em python, pela EBAC.
 
-## apupo/
+## Objetivo
 
-endpoints: `/`, `create/`, `[post_id]/`, `[post_id]/delete/`, `action/`
+Criar uma rede social com as funcionalidades básicas do antigo twitter.
 
-## auth/
+Além disso, o projeto visa utilizar o django apenas como REST API, fornecendo informações e lógica da base de dados para o front end.
 
-endpoints: `token/`, `token/refresh/`, `user/`, `logout/`, `authenticated/`, `register/`
+## Ferramentas
+
+- Django
+- Django Rest Framework
+- Pipenv (como virtual envinronment management tool)
